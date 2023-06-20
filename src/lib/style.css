@@ -1,0 +1,111 @@
+/* Estilos para la página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+   
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #888888;
+  }
+  
+  .root {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1,
+  h2,
+  h3 {
+    margin-top: 0;
+  }
+  
+  textarea,
+  input[type="file"] {
+    margin-bottom: 50px;
+  }
+  
+  /* Estilos para las publicaciones */
+  #postsContainer {
+    margin-top: 20px;
+   
+  }
+  
+  #postsContainer > div {
+    border: 5px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  #postsContainer > div > h3 {
+    margin: 0;
+  }
+  
+  #postsContainer > div > img {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #7973d488;
+    
+    /* otros estilos */
+    
+  }
+  
+  @media (max-width: 768px) {
+    .login-container {
+      max-width: 100%;
+      padding: 20px;
+    }
+  }
+  
+  .login-container h1 {
+    margin-bottom: 20px;
+  }
+  
+  .login-container input[type="text"],
+  .login-container input[type="email"],
+  .login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .login-container button:hover {
+    background-color: #0d1c2c;
+  }
+  #logoutBtn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+  }
+  
+  #logoutBtn:hover {
+    background-color: #0069d9;
+  }
