@@ -73,8 +73,6 @@ const firebaseConfig = {
         }
       });
   }
-  
-  
   // esta pendiente de algun cambio de estado de autenticación de Firebase sea inicio de sesion o cierre etc
   auth.onAuthStateChanged((user) => {
     if (user) {
