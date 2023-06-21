@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { auth, db, storage } from './firebase.js';
-import { login, registerUser, logout, postCreate, likeAdd, likeRemove, likeToggle, postRemove } from './utils.js';
+import { login, registerUser, logout, postCreate, likeAdd, likeRemove, likeToggle, postRemove, loginWithGoogle, loginWithGithub } from './utils.js';
 // Función para iniciar sesión con Firebase
 
 // Función para registrar un nuevo usuario en Firebase
@@ -79,16 +79,20 @@ function renderApp(user) {
     // se crea una porcion del HTML que corresponde al menu de publicaciones
     root.innerHTML = `   
         <div>
+        <ul class="navbar">
+      
+        <li style="float:right"><a class="nav-link logged-in" "><button id="logoutBtn">Cerrar sesión</button></a></li>
+      </ul>
           <h1>Bienvenido, ${user.displayName}</h1>
         </div>
       <div>
+     
       
-         <button id="logoutBtn">Cerrar sesión</button>
-       
         <h2>Crear publicación</h2>
-        <textarea id="postText" placeholder="Escribe tu mensaje"></textarea>
-        <input type="file" id="postImage">
-        <button id="createPostBtn">Publicar</button>
+        <textarea id="postText" placeholder="Escribe tu mensaje"></textarea> 
+      <p> <input type="file" id="postImage" class="selectFile" ></p>
+
+     <button id="createPostBtn">Publicar</button>
       </div>
       <div id="postsContainer"></div>
     `; } else {
@@ -137,7 +141,7 @@ function renderApp(user) {
         const postElement = document.createElement('div');
         const postId = doc.id;
         const likeBtn = document.createElement('button');
-        //  const delete = document.createElement('button');
+        const removeBtn = document.createElement('button');
         const likeCount = document.createElement('span');
 
         // Verificar si el usuario actual ya dio like a la publicación
@@ -213,7 +217,7 @@ function renderApp(user) {
         // al elemento de la publicación
         // crear eliminar
 
-        const removeBtn = document.createElement('button');
+        // const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Eliminar';
         removeBtn.classList.add('delete-button');
         // Agregar el evento click al botón de eliminar para eliminar la publicación
@@ -258,6 +262,7 @@ function renderApp(user) {
         if (post.imageUrl) {
           const imgElement = document.createElement('img');
           imgElement.src = post.imageUrl;
+          imgElement.classList.add('figura');
           postElement.appendChild(imgElement);
         }
         // Agregar el elemento de la publicación, el botón de like y el contador de likes
@@ -281,10 +286,34 @@ function renderLogin() {
         <input type="email" id="emailInput" placeholder="Correo electrónico" required>
         <input type="password" id="passwordInput" placeholder="Contraseña" required>
         <button id="loginBtn">Iniciar sesión</button>
+        <button id="googleBtn">Google sesión</button>
+        <button id="githubBtn">Github sesión</button>
         <p>¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
       </div>
     `;
-
+  // INICIO CON GOOGLE
+  const googleButton = document.getElementById('googleBtn');
+  googleButton.addEventListener('click', () => {
+    loginWithGoogle() // FUNCION
+      .then((credentials) => {
+        console.log(credentials);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  // INICIO CON GITHUB
+  const githubButton = document.getElementById('githubBtn');
+  githubButton.addEventListener('click', () => {
+    loginWithGithub()
+      .then((credentials) =>{
+        console.log(credentials);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  // INICIO CON LOGIN
   // Obtener el botón de inicio de sesión
   const loginBtn = document.getElementById('loginBtn');
 
