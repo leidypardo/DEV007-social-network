@@ -1,5 +1,6 @@
+/* eslint-disable no-shadow */
 import { auth, db, storage } from './firebase.js';
-import { login, registerUser, logout, postCreate, likeAdd, likeRemove, likeToggle } from './utils.js';
+import { login, registerUser, logout, postCreate, likeAdd, likeRemove, likeToggle, postRemove } from './utils.js';
 // Función para iniciar sesión con Firebase
 
 // Función para registrar un nuevo usuario en Firebase
@@ -39,23 +40,25 @@ function createPost(user, text, imageFile) {
       if (imageFile) {
         const imagePath = `posts/${docRef.id}/${imageFile.name}`; // Ruta de almacenamiento de la imagen en Storage
         return storage.ref()
-            .child(imagePath) //obtener la referencia de la imagen dentro del directorio imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
-            .put(imageFile) // Subir la imagen al Storage
-            .then(() => {
-              return storage.ref().child(imagePath).getDownloadURL(); // Obtener la URL de descarga de la imagen
-            })
-            .then((imageUrl) => {
-              // Actualizar el documento de la publicación en la colección 'posts' con la URL de la imagen
-              return db.collection('posts').doc(docRef.id).update({
-                imageUrl: imageUrl,
-              });
-            });
-        }
-      });
-  }
-  
-  
-  // esta pendiente de algun cambio de estado de autenticación de Firebase sea inicio de sesion o cierre etc
+          .child(imagePath) // obtener la referencia de la imagen dentro del directorio
+          //  imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
+          .put(imageFile) // Subir la imagen al Storage
+          .then(() => {
+            return storage.ref().child(imagePath).getDownloadURL();
+            // Obtener la URL de descarga de la imagen
+          })
+          .then((imageUrl) => {
+            // Actualizar el documento de la publicación en la colección 'posts' con la URL de la imagen
+            return db.collection('posts').doc(docRef.id).update({
+              imageUrl: imageUrl,
+          });
+          });
+      }
+      return docRef; // then() asegurar de que haya una declaración de retorno.por la funcion =>
+    });
+}
+
+// pendiente acerca cambio de estado de autenticación de Firebase inicio de sesion o cierre etc
 auth.onAuthStateChanged((user) => {
   if (user) {
     // El usuario ha iniciado sesión
@@ -70,7 +73,7 @@ auth.onAuthStateChanged((user) => {
 function renderApp(user) {
   const root = document.getElementById('root');
 
-  // El usuario ha iniciado sesión, este if se crea para garantizar que el usuario 
+  // El usuario ha iniciado sesión, este if se crea para garantizar que el usuario
   // inicio sesion y actualice el nombre en la vista de publicaciones
   if (user) {
     // se crea una porcion del HTML que corresponde al menu de publicaciones
@@ -144,23 +147,15 @@ function renderApp(user) {
           likeBtn.textContent = 'Me gusta';
         }
 
-        // Función para cambiar el estado de like (agregar/quitar) de una publicación
-        function toggleLike(postId, userId) {
-          return likeToggle()
+        // Función para quitar un like de una publicación
+        function removeLike(postId, userId) {
+          return likeRemove()
             .doc(postId)
-            .get()
-            .then(( doc ) => {
-              const post = doc.data();
-              if (post.likes.includes(userId)) {
-                // El usuario hizo la publicación, se permite quitar el like
-                removeLike(postId, userId);
-              } else {
-                addLike(postId, userId);
-                // El usuario no hizo la publicación, se permite agregar/quitar el like
-              }
+            .update({
+              likes: firebase.firestore.FieldValue.arrayRemove(userId),
             })
             .catch((error) => {
-              console.log('Error toggling like:', error);
+              console.log('Error quitando like:', error);
             });
         }
 
@@ -175,16 +170,24 @@ function renderApp(user) {
               console.log('Error agregando like:', error);
             });
         }
-
-        // Función para quitar un like de una publicación
-        function removeLike(postId, userId) {
-         return likeRemove()
+        // Función para cambiar el estado de like (agregar/quitar) de una publicación
+        // eslint-disable-next-line no-shadow
+        function toggleLike(postId, userId) {
+          return likeToggle()
             .doc(postId)
-            .update({
-              likes: firebase.firestore.FieldValue.arrayRemove(userId),
+            .get()
+            .then((doc) => {
+              const post = doc.data();
+              if (post.likes.includes(userId)) {
+                // El usuario hizo la publicación, se permite quitar el like
+                removeLike(postId, userId);
+              } else {
+                addLike(postId, userId);
+                // El usuario no hizo la publicación, se permite agregar/quitar el like
+              }
             })
             .catch((error) => {
-              console.log('Error quitando like:', error);
+              console.log('Error toggling like:', error);
             });
         }
 
@@ -209,11 +212,62 @@ function renderApp(user) {
         // Si la publicación tiene una URL de imagen, crear un elemento de imagen y agregarlo 
         // al elemento de la publicación
         // crear eliminar
-        // Crear el elemento del modal de confirmación
 
-   
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Eliminar';
+        removeBtn.classList.add('delete-button');
+        // Agregar el evento click al botón de eliminar para eliminar la publicación
+        removeBtn.addEventListener('click', () => {
+          removePost(postId);
+        });
+        function removePost(postId) {
+          return postRemove(postId)
+            .get()
+            .then((doc) => {
+              const post = doc.data();
+              // Verificar si el usuario actual es el creador del post
+              if (post.userId === user.uid) {
+                // Mostrar ventana modal de confirmación
+                const confirmDelete = window.confirm('¿Estás seguro de que quieres eliminar esta publicación?');
+                if (confirmDelete) {
+                // El usuario es el creador, se permite eliminar el post
+                  db.collection('posts')
+                    .doc(postId)
+                    .delete()
+                    .then(() => {
+                      console.log('Publicación eliminada correctamente');
+                      // realizar cualquier acción adicional después de eliminar la publicación
+                    })
+                    .catch((error) => {
+                      console.log('Error eliminando la publicación:', error);
+                    });
+                } else {
+                  console.log('No confirmo eliminar esta publicación');
+                }
+              } else {
+                console.log('No tienes permisos para eliminar esta publicación');
+              }
+            })
+            .catch((error) => {
+              console.log('Error obteniendo la publicación:', error);
+            });
+        }
 
-
+        // Agregar el botón de eliminar al elemento postElement
+        postElement.appendChild(removeBtn);
+        if (post.imageUrl) {
+          const imgElement = document.createElement('img');
+          imgElement.src = post.imageUrl;
+          postElement.appendChild(imgElement);
+        }
+        // Agregar el elemento de la publicación, el botón de like y el contador de likes
+        // al contenedor de publicaciones
+        postsContainer.appendChild(postElement);
+        postElement.appendChild(likeBtn);
+        postElement.appendChild(likeCount);
+      });
+    });
+}
 
 // Función para renderizar el formulario de inicio de sesión
 function renderLogin() {

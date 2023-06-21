@@ -30,3 +30,8 @@ export function likeRemove() {
 export function likeToggle() {
   return db.collection('posts');
 }
+
+export function postRemove(postId) {
+  return db.collection('posts')
+    .doc(postId);
+}
