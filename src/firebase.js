@@ -14,4 +14,3 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth(); // llama del servicio de autenticación de Firebase
 export const db = firebase.firestore(); // Instancia del servicio de Firestore de Firebase
 export const storage = firebase.storage(); // Instancia del servicio de almacenamiento de Firebase
-

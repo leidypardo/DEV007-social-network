@@ -29,7 +29,11 @@ function register(email, password, displayName) {
             // Se ejecuta cuando la promesa de actualización de perfil se resuelve con éxito
           })
           .then(() => {
-            renderApp(user); // Método creado para renderizar la aplicación con el usuario actualizado
+            // eslint-disable-next-line no-use-before-define
+            renderApp(user);
+            // Método creado para renderizar la
+
+            // aplicación con el usuario actualizado
           });
       })
   );
@@ -59,14 +63,12 @@ function createPost(user, text, imageFile) {
             .child(imagePath) // obtener la referencia de la imagen dentro del directorio
             //  imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
             .put(imageFile) // Subir la imagen al Storage
-            .then(() => storage.ref().child(imagePath).getDownloadURL(),
-              // Obtener la URL de descarga de la imagen
-            )
-            .then((imageUrl) =>
-              // Actualizar el documento de la publicación en la colección 'posts' con la URL de la imagen
-              db.collection('posts').doc(docRef.id).update({
-                imageUrl,
-              }))
+            .then(() => storage.ref().child(imagePath).getDownloadURL())
+          // Obtener la URL de descarga de la imagen
+            .then((imageUrl) => db.collection('posts').doc(docRef.id).update({ imageUrl }))
+        // Actualizar el documento de la publicación en la colección
+        // 'posts' con la URL de la imagen
+
         );
       }
       return docRef; // then() asegurar de que haya una declaración de retorno.por la funcion =>
