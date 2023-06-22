@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
 import { auth, db, storage } from './firebase.js';
 import {
@@ -248,6 +250,7 @@ function renderApp(user) {
 
           // Agregar el evento click al botón de editar para editar la publicación
           editBtn.addEventListener('click', () => {
+            // eslint-disable-next-line no-use-before-define
             editPost(postId, postElement);
           });
 
@@ -270,9 +273,8 @@ function renderApp(user) {
           postElement.appendChild(removeBtn);
         }
 
-        function editPost(postIdLocal, postElement) {
-          const postRef = db.collection('posts').doc(postIdLocal);
-          return postRef
+        function editPost(postIdLocal) {
+          return postEdit(postIdLocal)
             .get()
             .then((doc) => {
               if (doc.exists) {
@@ -280,7 +282,7 @@ function renderApp(user) {
                 const newText = prompt('Edit the post:', currentText);
 
                 if (newText !== null) {
-                  return postRef
+                  return postEdit(postIdLocal)
                     .update({ text: newText }) // Update the 'text' field of the post document
                     .then(() => {
                       console.log('Publicación editada correctamente');
@@ -301,8 +303,7 @@ function renderApp(user) {
         }
 
         function removePost(postId) {
-          const postRef = db.collection('posts').doc(postId);
-          return postRef
+          return postRemove(postId)
             .get()
             .then((doc) => {
               if (doc.exists) {
@@ -313,7 +314,7 @@ function renderApp(user) {
 
                   if (confirmDelete) {
                     // El usuario es el creador, se permite eliminar el post
-                    return postRef
+                    return postRemove(postId)
                       .delete()
                       .then(() => {
                         console.log('Publicación eliminada correctamente');
