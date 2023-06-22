@@ -1,5 +1,4 @@
 import { auth, db } from './firebase.js';
-
 export function login(email, password) {
   return auth.signInWithEmailAndPassword(email, password);
   // Realiza el inicio de sesión utilizando el correo electrónico y la contraseña proporcionados
@@ -35,3 +34,8 @@ export function postRemove(postId) {
   return db.collection('posts')
     .doc(postId);
 }
+export function postEdit(postId) {
+  return db.collection("posts")
+  .doc(postId);
+}
+
