@@ -39,3 +39,13 @@ export function postEdit(postId) {
   return db.collection('posts')
     .doc(postId);
 }
+
+export function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  return firebase.auth().signInWithPopup(provider);
+}
+export function loginWithGithub() {
+  const provider = new firebase.auth.GithubAuthProvider();
+  return firebase.auth().signInWithPopup(provider);
+}
+

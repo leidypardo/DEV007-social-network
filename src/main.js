@@ -12,6 +12,8 @@ import {
   likeToggle,
   postRemove,
   postEdit,
+  loginWithGoogle,
+  loginWithGithub,
 } from './utils.js';
 
 // Función para iniciar sesión con Firebase
@@ -40,7 +42,6 @@ function register(email, password, displayName) {
       })
   );
 }
-
 // Función para crear una publicación
 function createPost(user, text, imageFile) {
   // Crear un objeto post con los datos de la publicación
@@ -49,9 +50,10 @@ function createPost(user, text, imageFile) {
     username: user.displayName, // Nombre del usuario que realiza la publicación
     text, // Texto de la publicación
     likes: [], // Campo para almacenar los likes (inicialmente vacío)
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(), // Marca de tiempo de la publicación
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    // Marca de tiempo de la publicación
   };
-  // Agregar el post a la colección 'posts' en la base de datos
+    // Agregar el post a la colección 'posts' en la base de datos
   return postCreate()
     .add(post)
     .then((docRef) => {
@@ -63,13 +65,14 @@ function createPost(user, text, imageFile) {
           storage
             .ref()
             .child(imagePath) // obtener la referencia de la imagen dentro del directorio
-            //  imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
+
+          // imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
             .put(imageFile) // Subir la imagen al Storage
             .then(() => storage.ref().child(imagePath).getDownloadURL())
-          // Obtener la URL de descarga de la imagen
+            // Obtener la URL de descarga de la imagen
             .then((imageUrl) => db.collection('posts').doc(docRef.id).update({ imageUrl }))
-        // Actualizar el documento de la publicación en la colección
-        // 'posts' con la URL de la imagen
+            // Actualizar el documento de la publicación en la colección
+            // 'posts' con la URL de la imagen
 
         );
       }
@@ -95,22 +98,33 @@ function renderApp(user) {
   // El usuario ha iniciado sesión, este if se crea para garantizar que el usuario
   // inicio sesión y actualice el nombre en la vista de publicaciones
   if (user) {
-    // se crea una porción del HTML que corresponde al menú de publicaciones
-    root.innerHTML = `
+
+    // se crea una porcion del HTML que corresponde al menu de publicaciones
+    root.innerHTML = `   
+        <div>
+        <ul class="navbar">
+      
+        <li style="float:right"><a class="nav-link logged-in" "><button id="logoutBtn">Cerrar sesión</button></a></li>
+      </ul>
+          <h1>Bienvenido, ${user.displayName}</h1>
+        </div>
       <div>
-        <h1>Bienvenido, ${user.displayName}</h1>
-      </div>
-      <div>
-        <button id="logoutBtn">Cerrar sesión</button>
+     
+      
+
         <h2>Crear publicación</h2>
-        <textarea id="postText" placeholder="Escribe tu mensaje"></textarea>
-        <input type="file" id="postImage">
-        <button id="createPostBtn">Publicar</button>
+        <textarea id="postText" placeholder="Escribe tu mensaje"></textarea> 
+      <p> <input type="file" id="postImage" class="selectFile" ></p>
+
+     <button id="createPostBtn">Publicar</button>
       </div>
       <div id="postsContainer"></div>
     `;
   } else {
+
+
     // El usuario no ha iniciado sesión
+
     renderLogin();
   }
 
@@ -166,7 +180,6 @@ function renderApp(user) {
         } else {
           likeBtn.textContent = 'Me gusta';
         }
-
         // Función para quitar un like de una publicación
         function removeLike(postId, userId) {
           return likeRemove()
@@ -199,11 +212,11 @@ function renderApp(user) {
             .then((doc) => {
               const post = doc.data();
               if (post.likes.includes(userId)) {
-                // El usuario hizo la publicación, se permite quitar el like
+              // El usuario hizo la publicación, se permite quitar el like
                 removeLike(postId, userId);
               } else {
                 addLike(postId, userId);
-                // El usuario no hizo la publicación, se permite agregar/quitar el like
+              // El usuario no hizo la publicación, se permite agregar/quitar el like
               }
             })
             .catch((error) => {
@@ -238,7 +251,6 @@ function renderApp(user) {
           imgElement.src = post.imageUrl;
           postElement.appendChild(imgElement);
         }
-
         // Agregar el elemento de la publicación al contenedor de publicaciones
         postsContainer.appendChild(postElement);
 
@@ -250,7 +262,6 @@ function renderApp(user) {
 
           // Agregar el evento click al botón de editar para editar la publicación
           editBtn.addEventListener('click', () => {
-            // eslint-disable-next-line no-use-before-define
             editPost(postId, postElement);
           });
 
@@ -291,6 +302,43 @@ function renderApp(user) {
                       console.error('Error al editar la publicación: ', error);
                       throw error;
                     });
+
+                }
+              } else {
+                console.log('La publicacion no existe');
+              }
+            })
+            .catch((error) => {
+              console.error('Error al obtener la publicación: ', error);
+              throw error;
+            });
+        }
+        // crear eliminar
+        function removePost(postId) {
+          return postRemove(postId)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                // Verificar si el usuario actual es el creador del post
+                if (doc.data().userId === user.uid) {
+                  // Mostrar ventana modal de confirmación
+
+                  const confirmDelete = window.confirm('¿Estás seguro de que quieres eliminar esta publicación?');
+                  if (confirmDelete) {
+                    // El usuario es el creador, se permite eliminar el post
+                    return postRemove(postId)
+                      .delete()
+                      .then(() => {
+                        console.log('Publicación eliminada correctamente');
+                      // realizar cualquier acción adicional después de eliminar la publicación
+                      })
+                      .catch((error) => {
+                        console.log('Error eliminando la publicación:', error);
+                      });
+                  }
+                } else {
+                  console.log('No tienes permisos para eliminar esta publicación');
+
                 }
               } else {
                 console.log('La publicación no existe');
@@ -302,38 +350,6 @@ function renderApp(user) {
             });
         }
 
-        function removePost(postId) {
-          return postRemove(postId)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                // Verificar si el usuario actual es el creador del post
-                if (doc.data().userId === user.uid) {
-                  // Mostrar ventana modal de confirmación
-                  const confirmDelete = window.confirm('¿Estás seguro de que quieres eliminar esta publicación?');
-
-                  if (confirmDelete) {
-                    // El usuario es el creador, se permite eliminar el post
-                    return postRemove(postId)
-                      .delete()
-                      .then(() => {
-                        console.log('Publicación eliminada correctamente');
-                      })
-                      .catch((error) => {
-                        console.log('Error eliminando la publicación:', error);
-                      });
-                  }
-                } else {
-                  console.log('No tienes permisos para eliminar esta publicación');
-                }
-              } else {
-                console.log('La publicación no existe');
-              }
-            })
-            .catch((error) => {
-              console.log('Error obteniendo la publicación:', error);
-            });
-        }
       });
     });
 }
@@ -345,14 +361,40 @@ function renderLogin() {
 
   // Renderizar el formulario de inicio de sesión en el elemento root
   root.innerHTML = `
-    <div class="login-container">
-      <h1>Iniciar sesión</h1>
-      <input type="email" id="emailInput" placeholder="Correo electrónico" required>
-      <input type="password" id="passwordInput" placeholder="Contraseña" required>
-      <button id="loginBtn">Iniciar sesión</button>
-      <p>¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
-    </div>
-  `;
+
+      <div class="login-container">
+        <h1>Iniciar sesión</h1>
+        <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+        <input type="password" id="passwordInput" placeholder="Contraseña" required>
+        <button id="loginBtn">Iniciar sesión</button>
+        <button id="googleBtn">Google sesión</button>
+        <button id="githubBtn">Github sesión</button>
+        <p>¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
+      </div>
+    `;
+  // INICIO CON GOOGLE
+  const googleButton = document.getElementById('googleBtn');
+  googleButton.addEventListener('click', () => {
+    loginWithGoogle() // FUNCION
+      .then((credentials) => {
+        console.log(credentials);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  // INICIO CON GITHUB
+  const githubButton = document.getElementById('githubBtn');
+  githubButton.addEventListener('click', () => {
+    loginWithGithub()
+      .then((credentials) => {
+        console.log(credentials);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  // INICIO CON LOGIN
 
   // Obtener el botón de inicio de sesión
   const loginBtn = document.getElementById('loginBtn');
