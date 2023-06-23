@@ -48,4 +48,3 @@ export function loginWithGithub() {
   const provider = new firebase.auth.GithubAuthProvider();
   return firebase.auth().signInWithPopup(provider);
 }
-

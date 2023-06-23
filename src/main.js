@@ -53,7 +53,7 @@ function createPost(user, text, imageFile) {
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     // Marca de tiempo de la publicación
   };
-    // Agregar el post a la colección 'posts' en la base de datos
+  // Agregar el post a la colección 'posts' en la base de datos
   return postCreate()
     .add(post)
     .then((docRef) => {
@@ -66,14 +66,13 @@ function createPost(user, text, imageFile) {
             .ref()
             .child(imagePath) // obtener la referencia de la imagen dentro del directorio
 
-          // imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
+            // imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
             .put(imageFile) // Subir la imagen al Storage
             .then(() => storage.ref().child(imagePath).getDownloadURL())
             // Obtener la URL de descarga de la imagen
             .then((imageUrl) => db.collection('posts').doc(docRef.id).update({ imageUrl }))
-            // Actualizar el documento de la publicación en la colección
-            // 'posts' con la URL de la imagen
-
+        // Actualizar el documento de la publicación en la colección
+        // 'posts' con la URL de la imagen
         );
       }
       return docRef; // then() asegurar de que haya una declaración de retorno.por la funcion =>
@@ -98,7 +97,6 @@ function renderApp(user) {
   // El usuario ha iniciado sesión, este if se crea para garantizar que el usuario
   // inicio sesión y actualice el nombre en la vista de publicaciones
   if (user) {
-
     // se crea una porcion del HTML que corresponde al menu de publicaciones
     root.innerHTML = `   
         <div>
@@ -121,8 +119,6 @@ function renderApp(user) {
       <div id="postsContainer"></div>
     `;
   } else {
-
-
     // El usuario no ha iniciado sesión
 
     renderLogin();
@@ -212,11 +208,11 @@ function renderApp(user) {
             .then((doc) => {
               const post = doc.data();
               if (post.likes.includes(userId)) {
-              // El usuario hizo la publicación, se permite quitar el like
+                // El usuario hizo la publicación, se permite quitar el like
                 removeLike(postId, userId);
               } else {
                 addLike(postId, userId);
-              // El usuario no hizo la publicación, se permite agregar/quitar el like
+                // El usuario no hizo la publicación, se permite agregar/quitar el like
               }
             })
             .catch((error) => {
@@ -302,7 +298,6 @@ function renderApp(user) {
                       console.error('Error al editar la publicación: ', error);
                       throw error;
                     });
-
                 }
               } else {
                 console.log('La publicacion no existe');
@@ -323,22 +318,25 @@ function renderApp(user) {
                 if (doc.data().userId === user.uid) {
                   // Mostrar ventana modal de confirmación
 
-                  const confirmDelete = window.confirm('¿Estás seguro de que quieres eliminar esta publicación?');
+                  const confirmDelete = window.confirm(
+                    '¿Estás seguro de que quieres eliminar esta publicación?',
+                  );
                   if (confirmDelete) {
                     // El usuario es el creador, se permite eliminar el post
                     return postRemove(postId)
                       .delete()
                       .then(() => {
                         console.log('Publicación eliminada correctamente');
-                      // realizar cualquier acción adicional después de eliminar la publicación
+                        // realizar cualquier acción adicional después de eliminar la publicación
                       })
                       .catch((error) => {
                         console.log('Error eliminando la publicación:', error);
                       });
                   }
                 } else {
-                  console.log('No tienes permisos para eliminar esta publicación');
-
+                  console.log(
+                    'No tienes permisos para eliminar esta publicación',
+                  );
                 }
               } else {
                 console.log('La publicación no existe');
@@ -349,7 +347,6 @@ function renderApp(user) {
               throw error;
             });
         }
-
       });
     });
 }
@@ -406,10 +403,9 @@ function renderLogin() {
     const password = document.getElementById('passwordInput').value;
 
     // Llamar a la función de inicio de sesión (login) con el correo electrónico y la contraseña
-    login(email, password)
-      .catch((error) => {
-        console.log('Error logging in:', error);
-      });
+    login(email, password).catch((error) => {
+      console.log('Error logging in:', error);
+    });
   });
 
   // Obtener el enlace de registro
@@ -451,10 +447,9 @@ function renderRegister() {
 
     // Llamar a la función de registro (register) con el correo electrónico,
     // contraseña y nombre a mostrar
-    register(email, password, displayName)
-      .catch((error) => {
-        console.log('Error registering:', error);
-      });
+    register(email, password, displayName).catch((error) => {
+      console.log('Error registering:', error);
+    });
   });
 
   // Obtener el enlace de inicio de sesión

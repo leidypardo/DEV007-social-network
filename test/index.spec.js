@@ -1,4 +1,3 @@
-
 // Importa la función login y cualquier otra dependencia necesaria
 import { login } from '../src/utils.js';
 import { auth } from '../src/firebase.js';
@@ -30,5 +29,4 @@ describe('login', () => {
     // Verifica si la función devuelve los userCredentials esperados
     expect(result).toEqual('userCredentials');
   });
-
-  
+});

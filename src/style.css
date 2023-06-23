@@ -37,14 +37,7 @@ body {
   li:last-child {
     border-right: none;
   }
-  .selectFile{
-    width: 280px;
-  background-color: aquamarine;
 
-  }
-
-
-  
   h1,
   h2,
   h3 {
@@ -62,11 +55,10 @@ body {
   font-size: 18px;
   resize: none;
   /*Resize opcion de ampliar*/
-
- 
   }
+
   .selectFile{
-    display: inline-block;
+  display: inline-block;
   padding: 2px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -74,7 +66,7 @@ body {
   color: #555;
   font-size: 14px;
   width: 100%;
- 
+  width: 280px;
   transition: border-color 0.3s ease;
 }
   
