@@ -20,20 +20,27 @@ import {
 
 // Función para registrar un nuevo usuario en Firebase
 function register(email, password, displayName) {
-  return registerUser(email, password)
-  // Registra un nuevo usuario utilizando el correo electrónico y la contraseña proporcionados
+  return (
+    registerUser(email, password)
+      // Registra un nuevo usuario utilizando el correo electrónico y la contraseña proporcionados
+      // Se ejecuta cuando la promesa de registro se resuelve con éxito
+      .then((userCredential) => {
+        const user = userCredential.user; // Obtiene el usuario desde el objeto userCredential
+        // Actualiza el perfil del usuario con el nombre a mostrar proporcionado
+        return user
+          .updateProfile({
+            displayName,
+            // Se ejecuta cuando la promesa de actualización de perfil se resuelve con éxito
+          })
+          .then(() => {
+            // eslint-disable-next-line no-use-before-define
+            renderApp(user);
+            // Método creado para renderizar la
 
-    // Se ejecuta cuando la promesa de registro se resuelve con éxito
-    .then((userCredential) => {
-      const user = userCredential.user; // Obtiene el usuario desde el objeto userCredential
-      // Actualiza el perfil del usuario con el nombre a mostrar proporcionado
-      return user.updateProfile({
-        displayName,
-        // Se ejecuta cuando la promesa de actualización de perfil se resuelve con éxito
-      }).then(() => {
-        renderApp(user); // medotdo creado para renderizar la aplicación con el usuario actualizado
-      });
-    });
+            // aplicación con el usuario actualizado
+          });
+      })
+  );
 }
 // Función para crear una publicación
 function createPost(user, text, imageFile) {
@@ -58,6 +65,7 @@ function createPost(user, text, imageFile) {
           storage
             .ref()
             .child(imagePath) // obtener la referencia de la imagen dentro del directorio
+
           // imagePath es la ruta de almacenamiento de la imagen en Firebase Storage
             .put(imageFile) // Subir la imagen al Storage
             .then(() => storage.ref().child(imagePath).getDownloadURL())
@@ -65,13 +73,14 @@ function createPost(user, text, imageFile) {
             .then((imageUrl) => db.collection('posts').doc(docRef.id).update({ imageUrl }))
             // Actualizar el documento de la publicación en la colección
             // 'posts' con la URL de la imagen
+
         );
       }
       return docRef; // then() asegurar de que haya una declaración de retorno.por la funcion =>
     });
 }
 
-// pendiente acerca cambio de estado de autenticación de Firebase inicio de sesion o cierre etc
+// Pendiente acerca cambio de estado de autenticación de Firebase inicio de sesion o cierre etc
 auth.onAuthStateChanged((user) => {
   if (user) {
     // El usuario ha iniciado sesión
@@ -87,8 +96,9 @@ function renderApp(user) {
   const root = document.getElementById('root');
 
   // El usuario ha iniciado sesión, este if se crea para garantizar que el usuario
-  // inicio sesion y actualice el nombre en la vista de publicaciones
+  // inicio sesión y actualice el nombre en la vista de publicaciones
   if (user) {
+
     // se crea una porcion del HTML que corresponde al menu de publicaciones
     root.innerHTML = `   
         <div>
@@ -101,6 +111,7 @@ function renderApp(user) {
       <div>
      
       
+
         <h2>Crear publicación</h2>
         <textarea id="postText" placeholder="Escribe tu mensaje"></textarea> 
       <p> <input type="file" id="postImage" class="selectFile" ></p>
@@ -110,13 +121,18 @@ function renderApp(user) {
       <div id="postsContainer"></div>
     `;
   } else {
-    // el usuario no ha iniciado sesion
+
+
+    // El usuario no ha iniciado sesión
+
     renderLogin();
   }
+
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.addEventListener('click', () => {
     logout();
   });
+
   // Obtener el botón de crear publicación
   const createPostBtn = document.getElementById('createPostBtn');
 
@@ -187,8 +203,8 @@ function renderApp(user) {
               console.log('Error agregando like:', error);
             });
         }
+
         // Función para cambiar el estado de like (agregar/quitar) de una publicación
-        // eslint-disable-next-line no-shadow
         function toggleLike(postId, userId) {
           return likeToggle()
             .doc(postId)
@@ -221,11 +237,13 @@ function renderApp(user) {
           <h3>${post.username}</h3>
           <p>${post.text}</p>
         `;
+
         // Agregar el botón de "Me gusta" al elemento postElement
         postElement.appendChild(likeBtn);
 
         // Agregar el contador de "Me gusta" al elemento postElement
         postElement.appendChild(likeCount);
+
         // Si la publicación tiene una URL de imagen, crear un elemento de imagen y agregarlo
         // al elemento de la publicación
         if (post.imageUrl) {
@@ -241,10 +259,12 @@ function renderApp(user) {
           const editBtn = document.createElement('button');
           editBtn.textContent = 'Editar';
           editBtn.classList.add('edit-button');
+
           // Agregar el evento click al botón de editar para editar la publicación
           editBtn.addEventListener('click', () => {
             editPost(postId, postElement);
           });
+
           // Agregar el botón de editar al elemento postElement
           postElement.appendChild(editBtn);
         }
@@ -263,6 +283,7 @@ function renderApp(user) {
           // Agregar el botón de eliminar al elemento postElement
           postElement.appendChild(removeBtn);
         }
+
         function editPost(postIdLocal) {
           return postEdit(postIdLocal)
             .get()
@@ -281,6 +302,7 @@ function renderApp(user) {
                       console.error('Error al editar la publicación: ', error);
                       throw error;
                     });
+
                 }
               } else {
                 console.log('La publicacion no existe');
@@ -316,15 +338,18 @@ function renderApp(user) {
                   }
                 } else {
                   console.log('No tienes permisos para eliminar esta publicación');
+
                 }
               } else {
                 console.log('La publicación no existe');
               }
             })
             .catch((error) => {
-              console.log('Error obteniendo la publicación:', error);
+              console.error('Error al obtener la publicación: ', error);
+              throw error;
             });
         }
+
       });
     });
 }
@@ -336,6 +361,7 @@ function renderLogin() {
 
   // Renderizar el formulario de inicio de sesión en el elemento root
   root.innerHTML = `
+
       <div class="login-container">
         <h1>Iniciar sesión</h1>
         <input type="email" id="emailInput" placeholder="Correo electrónico" required>
@@ -369,6 +395,7 @@ function renderLogin() {
       });
   });
   // INICIO CON LOGIN
+
   // Obtener el botón de inicio de sesión
   const loginBtn = document.getElementById('loginBtn');
 
@@ -402,15 +429,15 @@ function renderRegister() {
 
   // Renderizar el formulario de registro en el elemento root
   root.innerHTML = `
-      <div class="login-container">
-        <h1>Regístrate</h1>
-        <input type="text" id="displayNameInput" placeholder="Nombre completo" required>
-        <input type="email" id="emailInput" placeholder="Correo electrónico" required>
-        <input type="password" id="passwordInput" placeholder="Contraseña" required>
-        <button id="registerBtn">Registrar</button>
-        <p>¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia sesión</a></p>
-      </div>
-    `;
+    <div class="login-container">
+      <h1>Regístrate</h1>
+      <input type="text" id="displayNameInput" placeholder="Nombre completo" required>
+      <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+      <input type="password" id="passwordInput" placeholder="Contraseña" required>
+      <button id="registerBtn">Registrar</button>
+      <p>¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia sesión</a></p>
+    </div>
+  `;
 
   // Obtener el botón de registro
   const registerBtn = document.getElementById('registerBtn');

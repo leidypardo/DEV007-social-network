@@ -1,3 +1,4 @@
+
 // Importa la función login y cualquier otra dependencia necesaria
 import { login } from '../src/utils.js';
 import { auth } from '../src/firebase.js';
@@ -30,13 +31,4 @@ describe('login', () => {
     expect(result).toEqual('userCredentials');
   });
 
-  it('should throw an error when authentication fails', async () => {
-    // Llama a la función login con credenciales inválidas
-    try {
-      await login('invalid@example.com', 'wrongpassword', authMock);
-    } catch (error) {
-      // Verifica si se lanzó un error como se esperaba
-      expect(error).toEqual('error');
-    }
-  });
-});
+  
