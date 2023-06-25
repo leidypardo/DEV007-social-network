@@ -1,7 +1,8 @@
 # Creando una Red Social
 
-## Índice
 
+## Índice
+* [0. HISTORIAS DE USUARIO](#0-historias-de-usuario)
 * [1. Preámbulo](#1-preámbulo)
 * [2. Resumen del proyecto](#2-resumen-del-proyecto)
 * [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
@@ -11,7 +12,80 @@
 * [7. Entrega](#7-entrega)
 * [8. Pistas, tips y lecturas complementarias](#8-pistas-tips-y-lecturas-complementarias)
 
-## 1. Preámbulo
+## 0. HISTORIAS DE USUARIO
+
+HISTORIA 1
+
+-Crear cuenta:
+Como: usuario de Traveling Pets
+Quiero: crear cuenta.
+Para: lograr acceder al contenido que existe en la plataforma.
+
+-Validacion del usuario
+Como: usuario de Traveling Pets
+Quiero: realizar la validacion de usuario
+Para: saber si existe o no una cuenta activa en la plataforma; si existe una cuenta no olverla a crear y si no crearla
+
+-Personalizacion perfil del usuario
+Como: usuario de Traveling Pets
+Quiero: realizar la personalizacion sobre el perfil del usuario
+Para: que el usuario tenga completa libertad acerca de su perfil, ueda actualizar su nombre su foto u ortos aspectos quue sea de su agrado.
+
+-Likear contenido de otros
+Como: usuario de Traveling Pets
+Quiero: poder likear el contenido de otros
+Para: que el otro usuario logre saber que su contenido es de mi interes o esbastantebueno e informativo.
+
+
+HISTORIA 2:
+
+-Visualizar contenido de otros
+Como: usuario de Traveling Pets
+Quiero: visualizar el contenido de otros usuarios en a aplicacion 
+Para: interatuar con ellos, ver sus opiniones, recomendaciones que realizen, para tener en cuenta de como es ese lugar del que publica, si tratan bien o no a los animalitos, si iene libertad en ese luga o no. entre otros aspectos. 
+
+-Editar contenido
+Como: usuario de Traveling Pets
+Quiero: editar contenido o actualizar contenido
+Para: en caso de querer actualizar algo en su contenido publicado pueda hacerlo sin ninuna restrinccion. 
+
+-Crear contenido:
+Como: usuario de Traveling Pets
+Quiero: crear nuevo contenido
+Para: no solo visualizar el contenido predeterminado que depronto la plataforma ofrezca o solo visualizar el contenido de otros, sino tambien yo visualzar mi contenido y que otros tambien puedan visualizar mi contenido.
+
+
+
+
+HISTORIA 3:
+
+-Borrar contenido
+Como: usuario de Traveling Pets
+Quiero: borrar contenido que ya no quiera que se visualice mas
+Para: tener una mayor comodidad el usuario, no tener un poco de contenido que ya no se quiera compartir.
+
+-Guardar contenido:
+Como: usuario de Traveling Pets
+Quiero: guardar contenido
+Para: tener de una forma más rapida para acceder a informacion que hayamos visualizado y que sea de nuestro interes.
+
+Cerrar sesion:
+Como: usuario de Traveling Pets
+Quiero: cera sesion.
+Para: tener mayor manejo de nuestra cuenta, ya que no siempre queremos tener nuestras sesiones abiertas sea por gusto o por seguridad.
+
+
+## 1. PROTOTIPO DE BAJA FIDELIDAD 
+
+<p float="left">
+  <img src="src/imagenes/PrototipoBaja1.jpeg" width="700" >
+  <img src="src/imagenes/PrototipoBaja2.jpeg" width="700" >
+</p>
+
+## 1. PROTOTIPO DE ALTA FIDELIDAD 
+<p float="left">
+  <img src="src/imagenes/prototipoAlta.jpeg" width="700" >
+</p>
 
 Instagram, Snapchat, Twitter, Facebook, Twitch, Linkedin, etc. Las redes
 sociales han invadido nuestras vidas. Las amamos u odiamos, y muchos no podemos
