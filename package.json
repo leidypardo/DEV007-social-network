@@ -27,8 +27,10 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^25.3.0",
+    "firebase": "^9.23.0",
     "htmlhint": "^1.0.0",
     "jest": "^27.0.1",
+    "jest-fetch-mock": "^3.0.3",
     "regenerator-runtime": "^0.13.1",
     "stylelint": "^14.1.0",
     "stylelint-config-recommended": "^6.0.0",
@@ -43,6 +45,6 @@
     "commit": "a5360f78b634be4f14eaea996ee4c7afc85a2f48"
   },
   "dependencies": {
-    "firebase": "^9.22.2"
+    "@types/jest": "^29.5.2"
   }
 }
