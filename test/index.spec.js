@@ -27,7 +27,6 @@ describe('Firebase Authentication', () => {
 
   describe('registerUser', () => {
     it('should register a new user with the provided email and password', async () => {
-
       const email = 'pets@example.com';
 
       const password = 'password';

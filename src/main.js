@@ -438,7 +438,6 @@ function renderRegister() {
       </div>
     `;
 
-
   // Obtener el botón de registro
   const registerBtn = document.getElementById('registerBtn');
 
