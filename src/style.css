@@ -3,7 +3,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-  
     background: linear-gradient(80deg, #202B20, #015967) ;
     height: 90vh;
   }
@@ -16,8 +15,8 @@ body {
     list-style-type: none;
     margin: 0;
     overflow: hidden;
-
   }
+  
   #postText{
     
       /* background-color: #4CAF50; */
@@ -28,9 +27,8 @@ body {
   font-size: 18px;
   resize: none;
   /*Resize opcion de ampliar*/
-
- 
   }
+
  h1{
   color: white;
   text-align: center;
@@ -48,9 +46,11 @@ body {
    color: white;
    text-align: center;
    font-size:18px;
-  }
+}
+
+
   .selectFile{
-    display: inline-block;
+  display: inline-block;
   padding: 2px;
   
   border-radius: 4px;
@@ -58,7 +58,7 @@ body {
   color: #555;
   font-size: 14px;
   width: 100%;
- 
+  width: 280px;
   transition: border-color 0.3s ease;
 }
   
@@ -93,8 +93,6 @@ text-align: center;
   /* Estilos para las publicaciones */
   #postsContainer {
     margin-top: 20px;
-    
-  
    
   }
   
@@ -177,6 +175,7 @@ text-align: center;
   #logoutBtn:hover {
     background-color: #0069d9;
   }
+
   .register{
     text-align: center;
     margin: 30px 0;
@@ -187,6 +186,7 @@ text-align: center;
     margin: 30px 0;
     padding: 0 0 40px 0;
   }
+
 .figura{
   width: 100%;
 
@@ -225,3 +225,4 @@ text-align: center;
   border: none;
   border-radius: 5px;
 }
+
