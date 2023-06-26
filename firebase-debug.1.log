@@ -1,0 +1,44 @@
+[debug] [2023-06-26T03:30:59.222Z] ----------------------------------------------------------------------
+[debug] [2023-06-26T03:30:59.228Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Dayana\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-06-26T03:30:59.229Z] CLI Version:   12.4.0
+[debug] [2023-06-26T03:30:59.231Z] Platform:      win32
+[debug] [2023-06-26T03:30:59.231Z] Node Version:  v18.16.0
+[debug] [2023-06-26T03:30:59.233Z] Time:          Sun Jun 25 2023 22:30:59 GMT-0500 (hora estándar de Colombia)
+[debug] [2023-06-26T03:30:59.234Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-06-26T03:30:59.466Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-06-26T03:30:59.468Z] > authorizing via signed-in user (dahian1507becerra@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Laboratoria\Proyectos\social-networkLeydi\DEV007-social-network
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-06-26T03:33:47.563Z] Using project from CLI flag: social-neteork-pets-friends
+[debug] [2023-06-26T03:33:47.570Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/social-neteork-pets-friends [none]
+[debug] [2023-06-26T03:33:48.149Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/social-neteork-pets-friends 200
+[debug] [2023-06-26T03:33:48.150Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/social-neteork-pets-friends {"projectId":"social-neteork-pets-friends","projectNumber":"167040868255","displayName":"Social-Neteork-Pets-Friends","name":"projects/social-neteork-pets-friends","resources":{"hostingSite":"social-neteork-pets-friends","storageBucket":"social-neteork-pets-friends.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_5645c2d5-2c13-495b-98e7-cdb398fd963d"}
+[info] i  Using project social-neteork-pets-friends (Social-Neteork-Pets-Friends) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
