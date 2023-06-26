@@ -3,48 +3,20 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-   
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    background-color: #888888;
+    background: linear-gradient(80deg, #202B20, #015967) ;
+    height: 90vh;
   }
-  
   .root {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 7px auto;
     padding: 20px;
   }
   .navbar {
     list-style-type: none;
     margin: 0;
     overflow: hidden;
-    /*background-color: #074c7d;
-   
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    /*separar los elementos */
-  }
-  li {
-
-    border-right: 1px solid #5675a9;
-    
   }
   
-  li:last-child {
-    border-right: none;
-  }
-
-  h1,
-  h2,
-  h3 {
-    margin-top: 0;
-  }
-  
-
   #postText{
     
       /* background-color: #4CAF50; */
@@ -57,10 +29,30 @@ body {
   /*Resize opcion de ampliar*/
   }
 
+ h1{
+  color: white;
+  text-align: center;
+ }
+  h2{
+    color:white;
+  }
+  .inic{
+    color: #000;
+  }
+  .regis{
+    color: #000;
+  }
+  .description{
+   color: white;
+   text-align: center;
+   font-size:18px;
+}
+
+
   .selectFile{
   display: inline-block;
   padding: 2px;
-  border: 1px solid #ccc;
+  
   border-radius: 4px;
   background-color: #fff;
   color: #555;
@@ -83,82 +75,88 @@ body {
     transition: background-color 0.3s ease;
   }
   #createPostBtn{
-    padding: 2px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
     background-color: #007bff;
     color: #fefefe;
-    font-size: 14px;
-    width: 50%;
+    font-size: 16px;
+    width: 40%;
     cursor: pointer;
-    align-items: center;
+   margin-left: 30%;
+   margin-right: 30%;
+    
   }
- 
+ #post-element{
+text-align: center;
+ }
   /* Estilos para las publicaciones */
   #postsContainer {
     margin-top: 20px;
-
    
   }
   
   #postsContainer > div {
-    border: 5px solid #ccc;
+    border: 1px solid #343131;
     border-radius: 10px;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
   }
   
   #postsContainer > div > h3 {
     margin: 0;
+    color: white;
   }
   
   #postsContainer > div > img {
     max-width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
   
   .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    max-width: 300px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    padding: 20px;
-    background-color: #7973d488;
+    display: absolute;
+    background: white;
+    border-radius: 10px;
     
-    /* otros estilos */
-    
+  }
+  .login-container h1{
+    text-align: center;
+    padding: 20px 0 20px 0;
+    border-bottom: 4px solid #007bff;
+
   }
   
   @media (max-width: 768px) {
     .login-container {
-      max-width: 100%;
+      max-width: 90%;
       padding: 20px;
     }
   }
   
-  .login-container h1 {
-    margin-bottom: 20px;
-  }
+  
   
   .login-container input[type="text"],
   .login-container input[type="email"],
   .login-container input[type="password"] {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     margin-bottom: 10px;
+    border:none;
+    margin-left:30px;
   }
   
   .login-container button {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
     cursor: pointer;
+    margin:0.1em;
+    border-radius:10px;   
+    margin-left:35px;  
+
   }
   
   .login-container button:hover {
@@ -178,12 +176,53 @@ body {
     background-color: #0069d9;
   }
 
+  .register{
+    text-align: center;
+    margin: 30px 0;
+    padding: 0 0 40px 0;
+  }
+  .loginLink{
+    text-align: center;
+    margin: 30px 0;
+    padding: 0 0 40px 0;
+  }
+
 .figura{
   width: 100%;
-  top: 5000px;
+
   
 }
 .delete-button{
   background-color:red;
+  cursor: pointer;
+  
+  color: #fff;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+}
+.like-button{
+  cursor: pointer;
+  margin-right: 4px;
+  background-color: #6b7f95;
+  color: #fff;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+
+}
+.count-like{
+  font-size: 16px;
+  color: #fff;
+}
+.edit-button{
+  cursor: pointer;
+  margin-right: 8px;
+  margin-left: 10px;
+  background-color: #8a956b;
+  color: #fff;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
 }
 

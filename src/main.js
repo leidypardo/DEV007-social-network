@@ -168,7 +168,10 @@ function renderApp(user) {
         postElement.id = 'post-element';
         const postId = doc.id;
         const likeBtn = document.createElement('button');
+        likeBtn.classList.add('like-button');
+
         const likeCount = document.createElement('span');
+        likeCount.classList.add('count-like');
 
         // Verificar si el usuario actual ya dio like a la publicación
         if (post.likes.includes(user.uid)) {
@@ -231,7 +234,7 @@ function renderApp(user) {
         // Agregar el contenido de la publicación al elemento postElement
         postElement.innerHTML = `
           <h3>${post.username}</h3>
-          <p>${post.text}</p>
+          <p class="description">${post.text}</p>
         `;
 
         // Agregar el botón de "Me gusta" al elemento postElement
@@ -360,13 +363,13 @@ function renderLogin() {
   root.innerHTML = `
 
       <div class="login-container">
-        <h1>Iniciar sesión</h1>
+        <h1 class="inic">Iniciar sesión</h1>
         <input type="email" id="emailInput" placeholder="Correo electrónico" required>
         <input type="password" id="passwordInput" placeholder="Contraseña" required>
         <button id="loginBtn">Iniciar sesión</button>
         <button id="googleBtn">Google sesión</button>
         <button id="githubBtn">Github sesión</button>
-        <p>¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
+        <p class="register" >¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
       </div>
     `;
   // INICIO CON GOOGLE
@@ -425,15 +428,16 @@ function renderRegister() {
 
   // Renderizar el formulario de registro en el elemento root
   root.innerHTML = `
-    <div class="login-container">
-      <h1>Regístrate</h1>
-      <input type="text" id="displayNameInput" placeholder="Nombre completo" required>
-      <input type="email" id="emailInput" placeholder="Correo electrónico" required>
-      <input type="password" id="passwordInput" placeholder="Contraseña" required>
-      <button id="registerBtn">Registrar</button>
-      <p>¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia sesión</a></p>
-    </div>
-  `;
+      <div class="login-container">
+        <h1 class="regis">Regístrate</h1>
+        <input type="text" id="displayNameInput" placeholder="Nombre completo" required>
+        <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+        <input type="password" id="passwordInput" placeholder="Contraseña" required>
+        <button id="registerBtn">Registrar</button>
+        <p class="loginLink">¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia sesión</a></p>
+      </div>
+    `;
+
 
   // Obtener el botón de registro
   const registerBtn = document.getElementById('registerBtn');
