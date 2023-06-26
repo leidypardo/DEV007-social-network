@@ -100,7 +100,7 @@ adicional nuestros usuarios pueden crear su cuenta de usuario, y loguearse con e
 
 * Los tests unitarios cubren con el 61% de statements, el 72.72% functions, de 51.53% lines, y de 100% branches, asi;
   <p float="left">
-  <img src="src/imagenes/prototipoAlta.jpeg" width="700" >
+  <img src="src/imagenes/test.png" width="700" >
 </p>
 
 
